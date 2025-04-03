@@ -1,0 +1,46 @@
+PUT _index_template/logs-starlink
+{
+  "version": 14,
+  "priority": 999,
+  "template": {
+    "settings": {
+      "index": {
+        "mode": "logsdb"
+      }
+    },
+    "mappings": {
+      "_source": {
+        "mode": "synthetic"
+      },
+      "properties": {
+        "geo.location": {
+          "ignore_malformed": false,
+          "type": "geo_point",
+          "ignore_z_value": true
+        }
+      }
+    }
+  },
+  "index_patterns": [
+    "logs-starlink*"
+  ],
+  "data_stream": {
+    "hidden": false,
+    "allow_custom_routing": false
+  },
+  "composed_of": [
+    "logs@mappings",
+    "logs@settings",
+    "ecs@mappings",
+    "logs@custom"
+  ],
+  "ignore_missing_component_templates": [
+    "logs@custom"
+  ],
+  "allow_auto_create": true,
+  "_meta": {
+    "description": "Custom template for Starlink Logs",
+    "managed": false
+  },
+  "deprecated": false
+}
